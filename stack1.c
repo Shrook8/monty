@@ -44,4 +44,36 @@ void print_stack(stack_t **stack, unsigned int line_number)
 	}
 }
 
+/**
+ * pop_top - adds node
+ * @stack: pointer
+ * @line_number: int show the number of the line
+*/
 
+void pop_top(stack_t **stack, unsigned int line_number)
+{
+	stack_t *tmp;
+
+	if (stack ==NULL || *stack == NULL)
+		more_err(7, line_number);
+
+	tmp = *stack;
+	*stack = tmp->next;
+	if (*stack != NULL)
+		(*stack)->prev = NULL;
+	free(tmp);
+}
+
+
+/**
+ * print_top - print the pop
+ * @stack: pointer
+ * @line_number: int show the line number
+*/
+
+void print_top(stack_t **stack, unsigned int line_number)
+{
+	if (stack == NULL || *stack == NULL)
+		more_err(6, line_number);
+	printf("%d\n", (*stack)->n);
+}
