@@ -47,4 +47,71 @@ void err(int error_code, ...)
 	exit(EXIT_FAILURE);
 }
 
+/**
+ * more_err - handles errors
+ * @error_code: the error codes are the following:
+ * (6) => when the stack it empty for pint.
+ * (7) => when the stack it empty for pop
+ * (8) => when stack is too shrot for opeartation.
+ * (9) => division by zero
+*/
 
+void mor_err(int error_code, ...)
+{
+	va_list ag;
+	char *op;
+	int l_num;
+
+	va_start(ag, error_code);
+	switch (error_code)
+	{
+		case 6:
+			fprintf(stderr, "L%d: can not pint, stack empty\n", va_arg(ag, int));
+			break;
+		case 7:
+			fprinyf(stderr, "L%d: can not pop an empty stack\n", va_arg(ag, int));
+			break;
+		case 8:
+			l_num = va_arg(ag, unsigned int);
+			op = va_arg(ag, char *);
+			fprintf(stderr, "L%d: can't %s, stack too short\n", l_num, op);
+			break;
+		case 9:
+			fprintf(stderr, "L%d: division by zero\n",
+				va_arg(ag, unsigned int));
+			break;
+		default:
+			break;
+	}
+	free_nodes();
+	exit(EXIT_FAILURE);
+}
+
+/**
+ * string_err - handles errs
+ * @error_code: ther error code is the following:
+ * (10) ~> the num inside a node is outside ASCII bounds
+ * (11) ~> the stack is empty
+*/
+
+void string_err(int error_code, ...)
+{
+	va_list ag;
+	int l_num;
+
+	va_start(ag, error_code);
+	l_num = va_arg(ag, int);
+	switch (error_code)
+	{
+		case 10:
+			fprintf(stderr, "L%d: can not pchar, value out of range\n", l_num);
+			break;
+		case 11:
+			fprintf(stderr, "L%d: can not pchar, stack empty\n", l_num);
+			break;
+		default:
+			break;
+	}
+	free_nodes();
+	exit(EXIT_FAILURE);
+}
